@@ -1,0 +1,43 @@
+# Examination Regulations — Ridgeview University
+
+*This document is the authoritative source for the university's formal examination conduct rules. It is maintained in markdown and exported to PDF (`exam_regulations.pdf`) for distribution, in keeping with the university's practice of issuing formal regulatory documents in PDF form.*
+
+## EXAM-1: General Conduct During Examinations
+<!-- section_id: EXAM-1 | conflict_group: null -->
+
+Students must report to their assigned examination venue at least fifteen minutes before the scheduled start time. Entry is not permitted more than thirty minutes after the examination has commenced, and no candidate is permitted to leave the venue in the first thirty minutes or the last ten minutes of the examination, except in a documented medical emergency. Candidates must remain silent throughout the examination except to raise a hand for the attention of an invigilator; communication of any kind with another candidate, verbal or otherwise, is treated as a conduct violation regardless of the content of the communication. Mobile phones, smartwatches, and other electronic devices must be switched off and stored in the designated area at the front of the venue for the duration of the examination.
+
+## EXAM-2: Admit Card and Identification
+<!-- section_id: EXAM-2 | conflict_group: null -->
+
+Every candidate must carry their examination admit card, generated through the student portal, along with a valid university ID card or government-issued photo identification to every examination. A candidate unable to produce a valid admit card at the venue may be permitted to sit the examination provisionally at the invigilator's discretion, subject to the candidate resolving the admit card issue with the Examination Cell within 48 hours; failure to do so results in the paper being withheld from evaluation. Admit cards are generated automatically once a candidate's fee payments are cleared and their attendance eligibility (see the Attendance Policy) has been confirmed by the Examination Cell; candidates who do not meet attendance eligibility will not be issued an admit card for the affected course unless a medical exemption, condonation, or committee waiver applicable to that course has been recorded (see EXAM-7-COMMITTEE).
+
+## EXAM-3: Malpractice and Unfair Means
+<!-- section_id: EXAM-3 | conflict_group: null -->
+
+Possession of unauthorized material, use of prohibited electronic devices, copying from another candidate's answer script, or impersonation are all treated as use of unfair means and are reported immediately to the invigilator-in-charge, who suspends the candidate's paper pending review by the Unfair Means Committee. The Committee convenes within five working days of an incident being reported and may impose sanctions ranging from cancellation of the specific paper to debarment from all university examinations for up to two academic years, depending on the severity and the candidate's prior record. A candidate found using unfair means has the right to a hearing before the Committee and may be accompanied by an academic advisor, though not by external legal counsel, and may appeal the Committee's decision to the Dean of Academic Affairs within ten working days.
+
+## EXAM-4: Seating and Invigilation
+<!-- section_id: EXAM-4 | conflict_group: null -->
+
+Seating arrangements for each examination are published on the notice board and student portal at least 24 hours in advance, with candidates seated according to roll number in a pattern designed to minimize adjacency between candidates from the same tutorial section. Each examination venue is staffed with a minimum of one invigilator per thirty candidates, plus a venue-in-charge responsible for coordinating with the Examination Cell on any irregularities. Invigilators are responsible for verifying candidate identity against admit cards at the start of the examination, distributing and collecting answer scripts, and maintaining the attendance register for the examination itself, which is distinct from and does not affect course attendance records under the Attendance Policy.
+
+## EXAM-5: Special Accommodations
+<!-- section_id: EXAM-5 | conflict_group: null -->
+
+Candidates with a documented disability or a temporary condition affecting their ability to sit a standard examination (such as a fractured writing hand) may apply for special accommodations through the Office of Accessibility Services at least two weeks before the examination period begins, or as soon as practicable in the case of a sudden temporary condition. Accommodations may include extended time (typically an additional twenty minutes per hour), a scribe, a separate examination room, or the use of assistive technology, depending on the nature of the documented need. Applications are reviewed by the Office of Accessibility Services in consultation with the Examination Cell, and approved accommodations are communicated to the relevant venue-in-charge at least 48 hours before the examination to allow for logistical arrangement.
+
+## EXAM-6: Re-evaluation and Revaluation
+<!-- section_id: EXAM-6 | conflict_group: null -->
+
+A candidate dissatisfied with their result may apply for re-evaluation (a recount of marks awarded per question, with no re-reading of answers) or revaluation (a full independent re-assessment of the answer script by a second examiner) within ten working days of results being declared, subject to the applicable fee for each. Revaluation results supersede the original result whether the outcome is higher, lower, or unchanged, and there is no provision to reject a revaluation result once initiated. Re-evaluation and revaluation are not available for internal assessment components, practical or laboratory examinations, or courses evaluated on a pass/fail rather than graded basis.
+
+## EXAM-7-COMMITTEE: Examination Committee Discretionary Powers
+<!-- section_id: EXAM-7-COMMITTEE | conflict_group: CG-ATTENDANCE -->
+
+The Examination Committee may, at its discretion, waive the minimum attendance requirement entirely for any student under exceptional circumstances. This discretionary power exists independently of the standard 75% attendance threshold and the reduced 60% medical exemption threshold set out in the Attendance Policy, and is intended to address situations that fall outside the scope of a routine medical certificate — for example, a documented family emergency requiring extended absence, participation in a national-level event on short notice, or a personal crisis substantiated by supporting documentation but not itself a medical condition. A waiver request under this provision is submitted directly to the Examination Committee (distinct from the Attendance Appeals Committee described in the Attendance Policy) and is considered on a case-by-case basis; the Committee's decision is not bound by the 75% or 60% figures used elsewhere and may grant exam eligibility at any attendance level it deems appropriate given the circumstances presented. Decisions under this provision are recorded in the candidate's examination file and communicated to the Examination Cell so that an admit card can be issued notwithstanding the attendance shortfall.
+
+## EXAM-8: Examination Timetable and Clash Resolution
+<!-- section_id: EXAM-8 | conflict_group: null -->
+
+The end-semester examination timetable is published by the Examination Cell at least three weeks before the examination period begins and lists the date, time, and venue for every course offered that semester. Candidates who discover a timetable clash — two examinations scheduled in overlapping slots due to an approved backlog course, inter-departmental elective, or dual-degree registration — must report the clash to the Examination Cell within 48 hours of the timetable being published, since clash resolution requires coordinating a rescheduled slot with the concerned department and cannot reliably be accommodated closer to the examination date. The Examination Cell resolves reported clashes by rescheduling one of the two examinations to a reserve slot held open in the timetable for this purpose, and communicates the revised schedule to the candidate and both concerned departments at least one week before the affected examination. Candidates who do not report a genuine clash within the 48-hour window and subsequently miss an examination as a result are treated under the standard missed-examination provisions rather than the clash-resolution provisions, and any resulting relief is at the discretion of the Examination Committee rather than guaranteed under this section.

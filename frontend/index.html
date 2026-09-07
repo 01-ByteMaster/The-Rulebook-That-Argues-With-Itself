@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ridgeview University Rulebook QA System — Ask questions about university policies, detect contradictions, and get cited answers.">
+    <title>Rulebook QA — Ridgeview University</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════
+           DESIGN SYSTEM TOKENS
+           ═══════════════════════════════════════════════════ */
+        :root {
+            /* Colors — Dark Mode Palette */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1a2235;
+            --bg-card: rgba(26, 34, 53, 0.7);
+            --bg-glass: rgba(17, 24, 39, 0.6);
+
+            --text-primary: #f0f4ff;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+
+            --accent-blue: #3b82f6;
+            --accent-blue-glow: rgba(59, 130, 246, 0.3);
+            --accent-purple: #8b5cf6;
+            --accent-purple-glow: rgba(139, 92, 246, 0.2);
+
+            --badge-green: #10b981;
+            --badge-green-bg: rgba(16, 185, 129, 0.15);
+            --badge-green-border: rgba(16, 185, 129, 0.3);
+            --badge-red: #ef4444;
+            --badge-red-bg: rgba(239, 68, 68, 0.15);
+            --badge-red-border: rgba(239, 68, 68, 0.3);
+            --badge-gray: #6b7280;
+            --badge-gray-bg: rgba(107, 114, 128, 0.15);
+            --badge-gray-border: rgba(107, 114, 128, 0.3);
+
+            --border-subtle: rgba(148, 163, 184, 0.1);
+            --border-medium: rgba(148, 163, 184, 0.2);
+
+            --shadow-glow: 0 0 60px rgba(59, 130, 246, 0.08);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-medium: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ═══════════════════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════════════════ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background gradient */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 20%, rgba(59, 130, 246, 0.06), transparent),
+                radial-gradient(ellipse 60% 60% at 80% 80%, rgba(139, 92, 246, 0.05), transparent),
+                radial-gradient(ellipse 40% 40% at 50% 50%, rgba(16, 185, 129, 0.03), transparent);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* ═══════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════ */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px 60px;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           HEADER
+           ═══════════════════════════════════════════════════ */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--accent-purple-glow);
+            border: 1px solid rgba(139, 92, 246, 0.25);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-purple);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .header-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-purple);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           SEARCH AREA
+           ═══════════════════════════════════════════════════ */
+        .search-container {
+            position: relative;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease-out 0.15s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-wrapper {
+            position: relative;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-lg);
+            padding: 6px;
+            box-shadow: var(--shadow-glow);
+            transition: border-color var(--transition-medium), box-shadow var(--transition-medium);
+        }
+
+        .search-wrapper:focus-within {
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-glow), 0 0 0 3px var(--accent-blue-glow);
+        }
+
+        .search-inner {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .search-icon {
+            flex-shrink: 0;
+            margin-left: 14px;
+            color: var(--text-muted);
+            transition: color var(--transition-fast);
+        }
+
+        .search-wrapper:focus-within .search-icon {
+            color: var(--accent-blue);
+        }
+
+        #question-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            padding: 14px 8px;
+            line-height: 1.5;
+        }
+
+        #question-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        #submit-btn {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-sans);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            letter-spacing: 0.3px;
+        }
+
+        #submit-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px var(--accent-blue-glow);
+        }
+
+        #submit-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        #submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #submit-btn .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        #submit-btn.loading .spinner {
+            display: block;
+        }
+
+        #submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .quick-q {
+            padding: 6px 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+        }
+
+        .quick-q:hover {
+            background: var(--accent-blue-glow);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: var(--accent-blue);
+        }
+
+        /* ═══════════════════════════════════════════════════
+           RESULTS AREA
+           ═══════════════════════════════════════════════════ */
+        #results-area {
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        .result-container {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-medium);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            box-shadow: var(--shadow-card);
+            animation: resultSlideIn 0.5s ease-out;
+        }
+
+        @keyframes resultSlideIn {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Type Badge */
+        .type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .type-badge.answered {
+            background: var(--badge-green-bg);
+            border: 1px solid var(--badge-green-border);
+            color: var(--badge-green);
+        }
+
+        .type-badge.not_covered {
+            background: var(--badge-gray-bg);
+            border: 1px solid var(--badge-gray-border);
+            color: var(--badge-gray);
+        }
+
+        .type-badge.conflict {
+            background: var(--badge-red-bg);
+            border: 1px solid var(--badge-red-border);
+            color: var(--badge-red);
+        }
+
+        .type-badge .badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .type-badge.answered .badge-dot { background: var(--badge-green); }
+        .type-badge.not_covered .badge-dot { background: var(--badge-gray); }
+        .type-badge.conflict .badge-dot { background: var(--badge-red); animation: pulse 1.5s ease-in-out infinite; }
+
+        /* Answer */
+        .answer-section {
+            margin-bottom: 24px;
+        }
+
+        .answer-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .answer-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            padding: 16px;
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        }
+
+        /* Conflict Note */
+        .conflict-note {
+            padding: 14px 18px;
+            background: var(--badge-red-bg);
+            border: 1px solid var(--badge-red-border);
+            border-radius: var(--radius-md);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .conflict-note .conflict-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: var(--badge-red);
+        }
+
+        .conflict-note p {
+            font-size: 0.875rem;
+            color: #fca5a5;
+            line-height: 1.6;
+        }
+
+        /* Not covered message */
+        .not-covered-msg {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .not-covered-msg .nc-icon {
+            display: block;
+            margin: 0 auto 12px;
+            color: var(--text-muted);
+        }
+
+        /* Passages */
+        .passages-section {
+            margin-top: 20px;
+        }
+
+        .passages-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .passage-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-bottom: 10px;
+            transition: border-color var(--transition-fast), transform var(--transition-fast);
+            animation: passageFadeIn 0.4s ease-out both;
+        }
+
+        .passage-card:hover {
+            border-color: var(--border-medium);
+            transform: translateY(-1px);
+        }
+
+        @keyframes passageFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .passage-card:nth-child(2) { animation-delay: 0.08s; }
+        .passage-card:nth-child(3) { animation-delay: 0.16s; }
+        .passage-card:nth-child(4) { animation-delay: 0.24s; }
+        .passage-card:nth-child(5) { animation-delay: 0.32s; }
+
+        .passage-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .passage-section-id {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent-blue);
+            background: var(--accent-blue-glow);
+            padding: 3px 10px;
+            border-radius: 6px;
+        }
+
+        .passage-source {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .passage-score {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .passage-score .score-val {
+            color: var(--badge-green);
+            font-weight: 500;
+        }
+
+        .passage-text {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .passage-text.expanded {
+            max-height: none;
+        }
+
+        .passage-text:not(.expanded)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, var(--bg-tertiary));
+        }
+
+        .passage-expand-btn {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            cursor: pointer;
+            font-weight: 500;
+            border: none;
+            background: none;
+            font-family: var(--font-sans);
+        }
+
+        .passage-expand-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Conflict passage grouping */
+        .conflict-passages .passage-card {
+            border-left: 3px solid var(--badge-red);
+        }
+
+        .conflict-vs {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 0;
+            color: var(--badge-red);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .conflict-vs::before,
+        .conflict-vs::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--badge-red-border);
+            margin: 0 12px;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════ */
+        .footer {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* ═══════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════ */
+        @media (max-width: 640px) {
+            .app-container { padding: 20px 16px 40px; }
+            h1 { font-size: 1.6rem; }
+            .search-inner { flex-direction: column; }
+            #submit-btn { width: 100%; justify-content: center; }
+            .result-container { padding: 20px; }
+            .passage-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .passage-score { margin-left: 0; }
+            .quick-questions { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-badge">
+                <span class="dot"></span>
+                Rulebook QA Engine
+            </div>
+            <h1>The Rulebook That Argues With Itself</h1>
+            <p class="subtitle">Ask any question about Ridgeview University policies — and discover where the rules contradict.</p>
+        </header>
+
+        <!-- SEARCH -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <div class="search-inner">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input
+                        type="text"
+                        id="question-input"
+                        placeholder="Ask a question about university policy..."
+                        autocomplete="off"
+                        autofocus
+                    >
+                    <button id="submit-btn" type="button">
+                        <span class="btn-text">Ask</span>
+                        <span class="spinner"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick example questions -->
+            <div class="quick-questions">
+                <button class="quick-q" data-q="What is the minimum attendance percentage I need to sit my exam?">📋 Min. attendance for exams?</button>
+                <button class="quick-q" data-q="If I leave the hostel early, when do I get my deposit back?">🏠 Hostel deposit refund?</button>
+                <button class="quick-q" data-q="What GPA do I need to keep my scholarship?">🎓 Scholarship GPA?</button>
+                <button class="quick-q" data-q="What are the library opening hours on weekends?">📚 Library hours?</button>
+                <button class="quick-q" data-q="How is the hostel mess fee structured?">🍽️ Mess fee details?</button>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        <div id="results-area"></div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            Ridgeview University Rulebook QA System &middot; Contradiction-Aware Policy Engine &middot; v1.0
+        </footer>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════
+        // APP LOGIC
+        // ═══════════════════════════════════════════════════
+        const API_URL = '/ask';
+
+        const inputEl = document.getElementById('question-input');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultsArea = document.getElementById('results-area');
+
+        // Submit on button click
+        submitBtn.addEventListener('click', handleSubmit);
+
+        // Submit on Enter key
+        inputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit();
+            }
+        });
+
+        // Quick questions
+        document.querySelectorAll('.quick-q').forEach(btn => {
+            btn.addEventListener('click', () => {
+                inputEl.value = btn.dataset.q;
+                handleSubmit();
+            });
+        });
+
+        async function handleSubmit() {
+            const question = inputEl.value.trim();
+            if (!question) return;
+
+            setLoading(true);
+            resultsArea.innerHTML = '';
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+
+                if (!res.ok) {
+                    throw new Error(`Server error: ${res.status}`);
+                }
+
+                const data = await res.json();
+                renderResult(data);
+            } catch (err) {
+                resultsArea.innerHTML = `
+                    <div class="result-container" style="text-align:center; color: var(--badge-red);">
+                        <p style="font-size:0.95rem;">⚠️ ${escapeHtml(err.message)}</p>
+                        <p style="font-size:0.8rem; color: var(--text-muted); margin-top:8px;">
+                            Make sure the backend server is running on the same host.
+                        </p>
+                    </div>
+                `;
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function setLoading(loading) {
+            submitBtn.disabled = loading;
+            if (loading) {
+                submitBtn.classList.add('loading');
+            } else {
+                submitBtn.classList.remove('loading');
+            }
+        }
+
+        function renderResult(data) {
+            const { type, answer, passages, conflict_note } = data;
+
+            let html = '<div class="result-container">';
+
+            // Type badge
+            const badgeLabel = type === 'not_covered' ? 'Not Covered' : type.charAt(0).toUpperCase() + type.slice(1);
+            html += `
+                <div class="type-badge ${type}">
+                    <span class="badge-dot"></span>
+                    ${badgeLabel}
+                </div>
+            `;
+
+            // Answer (for answered type)
+            if (type === 'answered' && answer) {
+                html += `
+                    <div class="answer-section">
+                        <div class="answer-label">Answer</div>
+                        <div class="answer-text">${escapeHtml(answer)}</div>
+                    </div>
+                `;
+            }
+
+            // Conflict note
+            if (type === 'conflict' && conflict_note) {
+                html += `
+                    <div class="conflict-note">
+                        <svg class="conflict-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        <p>${escapeHtml(conflict_note)}</p>
+                    </div>
+                `;
+            }
+
+            // Not covered message
+            if (type === 'not_covered') {
+                html += `
+                    <div class="not-covered-msg">
+                        <svg class="nc-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                        </svg>
+                        <p>This topic is <strong>not covered</strong> by the university rulebook corpus.</p>
+                        <p style="margin-top:6px; font-size:0.8rem; color: var(--text-muted);">
+                            Try asking about attendance, hostel rules, scholarships, fees, or exam regulations.
+                        </p>
+                    </div>
+                `;
+            }
+
+            // Passages
+            if (passages && passages.length > 0 && type !== 'not_covered') {
+                const isConflict = type === 'conflict';
+                html += `<div class="passages-section ${isConflict ? 'conflict-passages' : ''}">`;
+                html += `<div class="passages-label">${isConflict ? 'Conflicting Passages' : 'Supporting Passages'}</div>`;
+
+                passages.forEach((p, idx) => {
+                    if (isConflict && idx > 0) {
+                        html += `<div class="conflict-vs">VS</div>`;
+                    }
+
+                    const passageId = `passage-${idx}`;
+                    html += `
+                        <div class="passage-card">
+                            <div class="passage-meta">
+                                <span class="passage-section-id">${escapeHtml(p.section_id)}</span>
+                                <span class="passage-source">📄 ${escapeHtml(p.source_file)}</span>
+                                <span class="passage-score">Score: <span class="score-val">${p.score.toFixed(4)}</span></span>
+                            </div>
+                            <div class="passage-text" id="${passageId}">${escapeHtml(p.text)}</div>
+                            <button class="passage-expand-btn" onclick="togglePassage('${passageId}', this)">Show more ▾</button>
+                        </div>
+                    `;
+                });
+
+                html += '</div>';
+            }
+
+            html += '</div>';
+            resultsArea.innerHTML = html;
+        }
+
+        function togglePassage(id, btn) {
+            const el = document.getElementById(id);
+            if (el.classList.contains('expanded')) {
+                el.classList.remove('expanded');
+                btn.textContent = 'Show more ▾';
+            } else {
+                el.classList.add('expanded');
+                btn.textContent = 'Show less ▴';
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
