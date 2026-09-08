@@ -43,7 +43,7 @@ The server starts, loads 40 corpus chunks from 5 documents, builds a TF-IDF inde
 
 ## Architecture
 
-![System Architecture](rulebook-qa\system-architecture-rulebook-qa.excalidraw.svg)
+![System Architecture](./system-architecture-rulebook-qa.excalidraw.svg)
 
 ---
 
