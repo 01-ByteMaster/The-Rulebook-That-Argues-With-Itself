@@ -12,10 +12,11 @@
 | `ATT-5-MEDICAL` | `01_attendance_policy.md` | With an approved medical certificate, minimum attendance drops to **60%**. |
 | `EXAM-7-COMMITTEE` | `exam_regulations.pdf` | The Examination Committee may **waive the attendance requirement entirely**, at its discretion, independent of the 75%/60% figures. |
 
-**Test question:** *"What is the minimum attendance percentage I need to sit my exam?"*
-**Expected response type:** `conflict`
-**Expected passages cited:** all three of the above (`conflict_group: CG-ATTENDANCE`)
-**Why it's a genuine contradiction, not just detail-layering:** all three sections speak to the same question — "what attendance % do I need?" — and give three different, not-obviously-reconcilable answers (a hard floor, a reduced floor for one subgroup, and a discretionary override that can go below both). None of the three sections cross-references or subordinates the others, so a reader following any single section would come away with a different, confidently-stated number.
+**Test question:** *"What is the minimum attendance percentage I need to sit my exam?"* <br>
+**Expected response type:** `conflict` <br>
+**Expected passages cited:** all three of the above (`conflict_group: CG-ATTENDANCE`) <br>
+**Why it's a genuine contradiction, not just detail-layering:**
+**Explanation :** All three sections speak to the same question — "what attendance % do I need?" — and give three different, not-obviously-reconcilable answers (a hard floor, a reduced floor for one subgroup, and a discretionary override that can go below both). None of the three sections cross-references or subordinates the others, so a reader following any single section would come away with a different, confidently-stated number.
 
 ---
 
@@ -26,10 +27,11 @@
 | `HOSTEL-4-REFUND-A` | `02_hostel_handbook.md` | Deposit refunds are processed **within 15 working days** of vacating + no-dues sign-off. |
 | `FEE-5-REFUND-B` | `fee_deadlines_table.md` | No refunds of any kind are processed **after the 10th of the month** in which the student vacates, regardless of exit date — which can silently override or delay the 15-working-day promise depending on when in the month a student leaves. |
 
-**Test question:** *"If I leave the hostel early, when do I get my deposit back?"*
-**Expected response type:** `conflict`
-**Expected passages cited:** both of the above (`conflict_group: CG-HOSTEL-REFUND`)
-**Why it's a genuine contradiction:** `HOSTEL-4-REFUND-A` promises a fixed, predictable turnaround measured from the student's own paperwork completion. `FEE-5-REFUND-B` imposes a hard monthly batch cutoff that is indifferent to that timeline and can push the actual refund out well past 15 working days depending on when in the month the student vacates. A student cannot combine the two into one consistent answer — the two sections use different, uncoordinated clocks.
+**Test question:** *"If I leave the hostel early, when do I get my deposit back?"* <br>
+**Expected response type:** `conflict` <br>
+**Expected passages cited:** both of the above (`conflict_group: CG-HOSTEL-REFUND`) <br>
+**Why it's a genuine contradiction:** 
+**Explanation** : `HOSTEL-4-REFUND-A` promises a fixed, predictable turnaround measured from the student's own paperwork completion. `FEE-5-REFUND-B` imposes a hard monthly batch cutoff that is indifferent to that timeline and can push the actual refund out well past 15 working days depending on when in the month the student vacates. A student cannot combine the two into one consistent answer — the two sections use different, uncoordinated clocks. 
 
 ---
 
@@ -40,9 +42,9 @@
 | `SCH-4-GPA-A` | `03_scholarship_policy.md` | Renewal requires CGPA ≥ **6.5**, assessed **annually** (end of second semester). |
 | `SCH-6-GPA-B` | `03_scholarship_policy.md` | Satisfactory standing for continued support requires CGPA ≥ **7.0**, assessed **every semester**. |
 
-**Test question:** *"What GPA do I need to keep my scholarship?"*
-**Expected response type:** `conflict`
-**Expected passages cited:** both of the above (`conflict_group: CG-SCHOLARSHIP-RENEWAL`)
+**Test question:** *"What GPA do I need to keep my scholarship?"* <br>
+**Expected response type:** `conflict` <br>
+**Expected passages cited:** both of the above (`conflict_group: CG-SCHOLARSHIP-RENEWAL`) <br>
 **Why it's a genuine contradiction:** different numeric thresholds (6.5 vs. 7.0) AND different assessment cadences (annual vs. every semester), issued by different offices (Financial Aid vs. Registrar) with no explicit statement of which one governs. A student at, say, 6.8 CGPA in one semester would be "fine" under SCH-4-GPA-A's logic and "flagged" under SCH-6-GPA-B's.
 
 ---

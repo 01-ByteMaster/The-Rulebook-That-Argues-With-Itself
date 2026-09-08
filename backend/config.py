@@ -33,6 +33,6 @@ RELEVANCE_FLOOR = 0.06
 
 # --- Optional Gemini LLM Layer ---
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = "gemini-2.0-flash"
+GEMINI_MODEL = "gemini-3.6-flash"
 GEMINI_TIMEOUT = 5  # seconds
 USE_GEMINI = bool(GEMINI_API_KEY)

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="About Medicaps University's Rulebook QA — how the contradiction-aware policy search system works.">
+  <title>About — Rulebook QA — Medicaps University</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">R</span>
+      <span class="brand-text">
+        <span class="brand-name">Medicaps Rulebook QA</span>
+        <span class="brand-sub">policy search &amp; conflict detection</span>
+      </span>
+    </a>
+    <nav class="site-nav">
+      <a href="index.html">Ask</a>
+      <a href="about.html" aria-current="page">About</a>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section class="about-hero">
+      <h1>The rulebook that argues with itself.</h1>
+      <p>
+        Rulebook QA reads Medicaps University's policy documents, indexes every clause, and
+        answers student questions with a citation to the exact section it came from. Three
+        contradictions have been deliberately planted in the corpus — when a question touches
+        one, the system doesn't guess. It shows you both rules and says so plainly.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>How it works</h2>
+      <p class="section-lede">Every question moves through the same four-stage pipeline before an answer reaches the
+        page.</p>
+
+      <div class="pipeline">
+        <div class="pipeline-step">
+          <span class="pipeline-num"></span>
+          <h3>Ingest</h3>
+          <p>Five policy documents are parsed into 40 individually numbered sections.</p>
+        </div>
+        <div class="pipeline-step">
+          <span class="pipeline-num"></span>
+          <h3>Index</h3>
+          <p>A TF-IDF index is built over the corpus so a question can be matched to the closest clauses.</p>
+        </div>
+        <div class="pipeline-step">
+          <span class="pipeline-num"></span>
+          <h3>Classify</h3>
+          <p>Results are checked in order: conflict, then not-covered, then answered.</p>
+        </div>
+        <div class="pipeline-step">
+          <span class="pipeline-num"></span>
+          <h3>Answer</h3>
+          <p>An extractive answer is returned, optionally rephrased by Gemini if an API key is set.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>The corpus</h2>
+      <p class="section-lede">Five source files, 40 sections, roughly 7,000 words of policy text.</p>
+
+      <table class="corpus-table">
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Sections</th>
+            <th>Covers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01_attendance_policy.md</td>
+            <td><span class="tag-mono">ATT-1 – ATT-9</span></td>
+            <td>Attendance rules, the 75% threshold, medical exemptions, appeals</td>
+          </tr>
+          <tr>
+            <td>02_hostel_handbook.md</td>
+            <td><span class="tag-mono">HOSTEL-1 – HOSTEL-9</span></td>
+            <td>Hostel rules, curfew, guest policy, deposit refunds</td>
+          </tr>
+          <tr>
+            <td>03_scholarship_policy.md</td>
+            <td><span class="tag-mono">SCH-1 – SCH-8</span></td>
+            <td>Scholarship eligibility, GPA requirements, renewals</td>
+          </tr>
+          <tr>
+            <td>exam_regulations_SOURCE.md</td>
+            <td><span class="tag-mono">EXAM-1 – EXAM-8</span></td>
+            <td>Exam conduct, malpractice, committee waivers</td>
+          </tr>
+          <tr>
+            <td>fee_deadlines_table.md</td>
+            <td><span class="tag-mono">FEE-1 – FEE-6</span></td>
+            <td>Fee deadlines, late fees, refund processing</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="about-section">
+      <h2>Three planted contradictions</h2>
+      <p class="section-lede">Real policy handbooks disagree with themselves more often than anyone admits. These are
+        seeded on purpose so the system can prove it catches them.</p>
+
+      <div class="case-file">
+        <div class="case-file-head">
+          <h3>Attendance threshold</h3>
+          <span class="case-file-id">CG-ATTENDANCE · 3-way</span>
+        </div>
+        <p class="case-file-question">"What is the minimum attendance percentage I need to sit my exam?"</p>
+        <div class="clause-vs">
+          <div class="clause">
+            <span class="clause-tag">ATT-2</span>
+            <p>75% attendance required.</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="clause">
+            <span class="clause-tag">ATT-5-MEDICAL</span>
+            <p>60% permitted with a medical certificate — and EXAM-7-COMMITTEE allows a full waiver.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-file">
+        <div class="case-file-head">
+          <h3>Hostel deposit refund</h3>
+          <span class="case-file-id">CG-HOSTEL-REFUND · 2-way</span>
+        </div>
+        <p class="case-file-question">"If I leave the hostel early, when do I get my deposit back?"</p>
+        <div class="clause-vs">
+          <div class="clause">
+            <span class="clause-tag">HOSTEL-4-REFUND-A</span>
+            <p>Refund issued within 15 working days.</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="clause">
+            <span class="clause-tag">FEE-5-REFUND-B</span>
+            <p>No refunds are issued after the 10th of the month.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-file">
+        <div class="case-file-head">
+          <h3>Scholarship GPA renewal</h3>
+          <span class="case-file-id">CG-SCHOLARSHIP-RENEWAL · 2-way</span>
+        </div>
+        <p class="case-file-question">"What GPA do I need to keep my scholarship?"</p>
+        <div class="clause-vs">
+          <div class="clause">
+            <span class="clause-tag">SCH-4-GPA-A</span>
+            <p>CGPA of 6.5 or higher, checked annually.</p>
+          </div>
+          <div class="vs-divider">VS</div>
+          <div class="clause">
+            <span class="clause-tag">SCH-6-GPA-B</span>
+            <p>CGPA of 7.0 or higher, checked every semester.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Under the hood</h2>
+      <p class="section-lede">Built with FastAPI, a TF-IDF retriever, and rule-based classification — with an optional
+        Gemini pass for more natural phrasing.</p>
+
+      <div class="spec-grid">
+        <div class="spec-row"><span class="k">Backend</span><span class="v">FastAPI + Pydantic v2</span></div>
+        <div class="spec-row"><span class="k">Retrieval</span><span class="v">TF-IDF · cosine similarity</span></div>
+        <div class="spec-row"><span class="k">Chunks indexed</span><span class="v">40</span></div>
+        <div class="spec-row"><span class="k">Not-covered threshold</span><span class="v">0.13</span></div>
+        <div class="spec-row"><span class="k">Conflict relevance floor</span><span class="v">0.06</span></div>
+        <div class="spec-row"><span class="k">Passages retrieved (top-k)</span><span class="v">10</span></div>
+        <div class="spec-row"><span class="k">AI phrasing</span><span class="v">Optional — Gemini API</span></div>
+        <div class="spec-row"><span class="k">Test coverage</span><span class="v">35 / 35 passing</span></div>
+      </div>
+    </section>
+
+    <section class="about-section" style="border-bottom: none; padding-bottom: 0;">
+      <h2>Have a question?</h2>
+      <p class="section-lede">Ask about attendance, hostel policy, fees, exams, or scholarships and get a cited answer
+        in seconds.</p>
+      <a class="about-cta" href="index.html">
+        Ask the rulebook
+        <i data-lucide="arrow-up-right" width="15" height="15"></i>
+      </a>
+    </section>
+
+  </main>
+
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

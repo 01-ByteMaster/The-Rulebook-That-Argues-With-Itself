@@ -59,7 +59,7 @@ def classify(top_k_results: list[RetrievalResult]) -> dict:
     if top_k_results[0].score < NOT_COVERED_THRESHOLD:
         return {
             "type": "not_covered",
-            "passages": top_k_results[:1],  # show closest-but-insufficient match
+            "passages": [],  # don't send irrelevant passages that scored below threshold
             "conflict_note": None,
             "answer_passages": []
         }

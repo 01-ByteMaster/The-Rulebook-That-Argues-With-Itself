@@ -83,15 +83,7 @@ async def ask_question(request: QuestionRequest):
             for r in classification["passages"]
         ]
     elif response_type == "not_covered":
-        passages = [
-            PassageResult(
-                section_id=r.section_id,
-                source_file=r.source_file,
-                text=r.text,
-                score=r.score
-            )
-            for r in classification["passages"]
-        ]
+        passages = []  # No passages for not_covered — nothing relevant to show
     else:  # answered
         passages = [
             PassageResult(
@@ -138,3 +130,6 @@ async def health_check():
         "chunks_loaded": len(chunks),
         "corpus_dir": CORPUS_DIR
     }
+
+# Serve style.css, app.js, about.html, etc. — must come after all routes above
+app.mount("/", StaticFiles(directory=FRONTEND_DIR), name="frontend-assets")

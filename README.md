@@ -1,4 +1,4 @@
-# Rulebook QA System — Ridgeview University
+# Rulebook QA System — Medicaps University
 
 > **"The Rulebook That Argues With Itself"** — A contradiction-aware QA system that ingests university policy documents, detects planted contradictions, and classifies questions as `answered`, `not_covered`, or `conflict`.
 
@@ -43,42 +43,7 @@ The server starts, loads 40 corpus chunks from 5 documents, builds a TF-IDF inde
 
 ## Architecture
 
-```
-User Question
-      │
-      ▼
-  ┌───────────┐
-  │  Frontend  │  (Single HTML + vanilla JS)
-  │ index.html │
-  └─────┬─────┘
-        │ POST /ask
-        ▼
-  ┌───────────┐     ┌───────────┐
-  │  main.py   │────▶│ ingest.py │  (Loads corpus at startup)
-  │  FastAPI   │     └───────────┘
-  └─────┬─────┘
-        │
-        ▼
-  ┌─────────────┐
-  │ retrieval.py │  TF-IDF + cosine similarity → top-k chunks
-  └──────┬──────┘
-         │
-         ▼
-  ┌─────────────┐
-  │ classify.py  │  conflict → not_covered → answered (priority order)
-  └──────┬──────┘
-         │
-         ▼
-  ┌─────────────┐
-  │ generate.py  │  Extractive answer (+ optional Gemini grounded phrasing)
-  └─────────────┘
-```
-
-### Classification Priority (Spec Section 5)
-
-1. **CONFLICT** — If ≥2 chunks from the same `conflict_group` score above `RELEVANCE_FLOOR`
-2. **NOT_COVERED** — If best chunk score < `NOT_COVERED_THRESHOLD`
-3. **ANSWERED** — Default fallback (topic is covered, no conflict)
+![System Architecture](rulebook-qa\system-architecture-rulebook-qa.excalidraw.svg)
 
 ---
 
@@ -149,38 +114,70 @@ Returns system status and chunk count.
 
 ## Testing
 
-### Run Full Test Suite (35 questions)
+### Full Test Suite
+
+Run the complete test suite containing **35 test cases**:
+
 ```bash
 python -m backend.run_tests
 ```
 
-This runs 25 not-covered + 3 conflict + 7 answered questions and writes results to `data/test_results.md`.
+The test results are saved to:
 
-### Run Threshold Tuning
+```text
+data/test_results.md
+```
+
+### Test Coverage
+
+| Category    | Test Cases |       Result       |
+| :---------- | ---------: | :----------------: |
+| Not Covered |         25 |   ✅ 25/25 Passed   |
+| Conflict    |          3 |   ✅ 3/3 Detected   |
+| Answered    |          7 |    ✅ 7/7 Passed    |
+| **Total**   |     **35** | **✅ 35/35 Passed** |
+
+### Threshold Tuning
+
+To analyze similarity-score distributions and determine suitable classification thresholds:
+
 ```bash
 python -m backend.tune_thresholds
 ```
 
-Shows score distributions for each question category and recommends threshold values.
+This analyzes the scores for each question category and provides recommended threshold values.
 
-### Test Results Summary
-All 35 test cases pass:
-- ✅ 25/25 not_covered questions correctly classified
-- ✅ 3/3 conflict questions correctly detected with proper passages
-- ✅ 7/7 answered questions correctly classified with relevant answers
+### Test Result
+
+All **35 test cases passed successfully**, validating:
+
+* Correct classification of covered and not-covered queries
+* Accurate detection of conflicting rules
+* Retrieval of relevant supporting passages
+* Appropriate similarity-based classification
 
 ---
 
 ## Frontend
 
-The frontend is a single-page dark-themed UI at `http://localhost:8000/` featuring:
-- Search bar with quick-question shortcuts
-- Color-coded badges: 🟢 ANSWERED, ⚫ NOT COVERED, 🔴 CONFLICT
-- Passage cards with section ID, source file, similarity score
-- Conflict passages displayed with "VS" separators
-- Expandable passage text with smooth animations
+The project includes a **single-page, dark-themed web interface** accessible at:
 
----
+```text
+http://localhost:8000/
+```
+
+### Key Features
+
+| Feature                   | Description                                                      |
+| :------------------------ | :--------------------------------------------------------------- |
+| **Search Interface**      | Search bar with quick-question shortcuts                         |
+| **Result Classification** | Color-coded badges for `ANSWERED`, `NOT COVERED`, and `CONFLICT` |
+| **Passage Cards**         | Displays section ID, source file, and similarity score           |
+| **Conflict View**         | Shows conflicting passages with a clear **VS** separator         |
+| **Expandable Passages**   | Allows users to expand or collapse passage text                  |
+
+The frontend provides a **simple and intuitive view of search results, supporting evidence, and detected rule conflicts**.
+
 
 ## Configuration
 
